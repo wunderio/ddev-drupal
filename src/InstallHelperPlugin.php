@@ -145,7 +145,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
 
     // Copy over the .lando.base.yml file.
     $src_base = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.ddev/config.wunderio.yaml';
-    self::copy($src_base, $this->projectDir);
+    self::copy($src_base, "{$this->projectDir}/.ddev");
   }
 
   /**
