@@ -13,3 +13,14 @@ URL will become example.com.ddev.site.
 ```
 ddev config --project-type=drupal10 --project-name=example.com
 ```
+
+2. Start DDEV.
+
+   ```
+   ddev start
+
+3. Install the composer package:
+
+   ```
+   ddev composer require wunderio/ddev-drupal --dev
+   ```
