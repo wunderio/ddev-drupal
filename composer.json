@@ -1,9 +1,9 @@
 {
-    "name": "wunderio/lando-drupal",
-    "description": "Wunder's extendable template for Lando Drupal projects.",
+    "name": "wunderio/ddev-drupal",
+    "description": "Wunder's extendable template for DDEV Drupal projects.",
     "type": "composer-plugin",
     "license": "GPL-2.0-or-later",
-    "homepage": "https://github.com/wunderio/lando-drupal",
+    "homepage": "https://github.com/wunderio/ddev-drupal",
     "authors": [
         {
             "name": "Hannes Kirsman",
@@ -21,10 +21,10 @@
     },
     "autoload": {
         "psr-4": {
-            "Wunderio\\LandoDrupal\\Composer\\": "src/"
+            "Wunderio\\DdevDrupal\\Composer\\": "src/"
         }
     },
     "extra": {
-        "class": "Wunderio\\LandoDrupal\\Composer\\InstallHelperPlugin"
+        "class": "Wunderio\\DdevDrupal\\Composer\\InstallHelperPlugin"
     }
 }

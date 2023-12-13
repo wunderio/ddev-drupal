@@ -1,6 +1,6 @@
 <?php
 
-namespace Wunderio\LandoDrupal\Composer;
+namespace Wunderio\DdevDrupal\Composer;
 
 use Composer\Composer;
 use Composer\EventDispatcher\EventSubscriberInterface;
@@ -14,14 +14,14 @@ use Composer\Plugin\PluginInterface;
  *
  * Help to deploy files to project root and install custom extensions.
  *
- * @package Wunderio\LandoDrupal\Composer
+ * @package Wunderio\DdevDrupal\Composer
  */
 class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
 
   /**
    * Name of this package.
    */
-  private const PACKAGE_NAME = 'wunderio/lando-drupal';
+  private const PACKAGE_NAME = 'wunderio/ddev-drupal';
 
   /**
    * The Composer service.
@@ -73,10 +73,10 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   public static function getSubscribedEvents() {
     return [
       PackageEvents::POST_PACKAGE_INSTALL => [
-        ['onWunderIoLandoDrupalPackageInstall', 0],
+        ['onWunderIoDdevDrupalPackageInstall', 0],
       ],
       PackageEvents::POST_PACKAGE_UPDATE => [
-        ['onWunderIoLandoDrupalPackageInstall', 0],
+        ['onWunderIoDdevDrupalPackageInstall', 0],
       ],
     ];
   }
@@ -100,7 +100,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * @param \Composer\Installer\PackageEvent $event
    *   Composer package event sent on install/update/remove.
    */
-  public function onWunderIoLandoDrupalPackageInstall(PackageEvent $event) {
+  public function onWunderIoDdevDrupalPackageInstall(PackageEvent $event) {
     /** @var \Composer\DependencyResolver\Operation\InstallOperation $operation */
     $operation = $event->getOperation();
 
@@ -118,10 +118,10 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
       return NULL;
     }
 
-    self::deployLandoFiles();
+    self::deployDdevFiles();
 
-    $output = shell_exec('bash vendor/wunderio/lando-drupal/scripts/load_extensions.sh');
-    $this->io->write("<info>{$output}</info>");
+    #$output = shell_exec('bash vendor/wunderio/lando-drupal/scripts/load_extensions.sh');
+    #$this->io->write("<info>{$output}</info>");
   }
 
   /**
@@ -130,27 +130,22 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * @param \Composer\Installer\PackageEvent $event
    *   Composer package event sent on install/update/remove.
    */
-  public function onWunderIoLandoDrupalPackageUpdate(PackageEvent $event) {
-    self::deployLandoFiles();
+  public function onWunderIoDdevDrupalPackageUpdate(PackageEvent $event) {
+    self::deployDdevFiles();
   }
 
   /**
-   * Copy the .lando.base.yml file and the .lando/core directory to the project.
+   * Copy the config.yaml file and the .ddev/wunderio/core directory to the project.
    */
-  private function deployLandoFiles(): void {
+  private function deployDdevFiles(): void {
     // Copy over the .lando/core directory.
-    $src_core = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.lando/core';
-    $dest_core = "{$this->projectDir}/.lando/core";
+    $src_core = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.ddev/wunderio/core';
+    $dest_core = "{$this->projectDir}/.ddev/wunderio/core";
     self::rcopy($src_core, $dest_core);
 
     // Copy over the .lando.base.yml file.
-    $src_base = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.lando.base.yml';
+    $src_base = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.ddev/config.yaml';
     self::copy($src_base, $this->projectDir);
-
-    // Copy over the Drush aliases file.
-    $src_drush_aliases = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/drush/sites';
-    $dest_drush_aliases = "{$this->projectDir}/drush/sites";
-    self::rcopy($src_drush_aliases, $dest_drush_aliases);
   }
 
   /**
