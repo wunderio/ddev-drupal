@@ -16,8 +16,6 @@ hooks:
   post-start:
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/custom/appserver-build.sh || true"
 
-disable_settings_management: true
-
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
 # + marks that it's implemented.
