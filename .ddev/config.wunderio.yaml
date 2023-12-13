@@ -1,5 +1,5 @@
 type: drupal10
-docroot: web
+docroot: web2
 php_version: "8.1"
 webserver_type: nginx-fpm
 xdebug_enabled: false
@@ -7,7 +7,7 @@ additional_hostnames: []
 additional_fqdns: []
 database:
     type: mariadb
-    version: "10.4"
+    version: "10.1"
 use_dns_when_possible: true
 composer_version: "2"
 web_environment: []
