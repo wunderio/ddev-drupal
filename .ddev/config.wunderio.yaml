@@ -1,20 +1,7 @@
-type: drupal10
-docroot: web2
-php_version: "8.1"
-webserver_type: nginx-fpm
-xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
-database:
-    type: mariadb
-    version: "10.1"
-use_dns_when_possible: true
-composer_version: "2"
-web_environment: []
-
 hooks:
   post-start:
-    - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/custom/appserver-build.sh || true"
+    # Build hook workaround to run composer install on first start.
+    - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
 
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
