@@ -30,15 +30,15 @@ hooks:
 #     description: "Runs grumphp commands"
 #     cmd:
 #       - appserver: ./vendor/bin/grumphp
-#   phpunit:
-#     description: "Runs PHPUnit commands"
-#     user: www-data
-#     cmd:
-#       - appserver: "/app/.lando/core/_run-scripts.sh tooling-phpunit.sh"
-#   regenerate-phpunit-config:
-#     description: "Regenerates fresh PHPUnit configuration."
-#     cmd:
-#       - appserver: "/app/.lando/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh"
+#+   phpunit:
+#+     description: "Runs PHPUnit commands"
+#+     user: www-data
+#+     cmd:
+#+       - appserver: "/app/.lando/core/_run-scripts.sh tooling-phpunit.sh"
+#+   regenerate-phpunit-config:
+#+     description: "Regenerates fresh PHPUnit configuration."
+#+     cmd:
+#+       - appserver: "/app/.lando/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh"
 #   varnishadm:
 #     description: "Runs varnishadm commands"
 #     service: varnish
