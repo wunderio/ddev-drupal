@@ -12,4 +12,4 @@ if [ ! -f "/var/www/html/phpunit.xml" ]; then
     exit 1
 fi
 
-php /var/www/html/vendor/bin/phpunit -c /var/www/html/phpunit.xml --testdox
+php /var/www/html/vendor/bin/phpunit -c /var/www/html/phpunit.xml --testdox "$@"

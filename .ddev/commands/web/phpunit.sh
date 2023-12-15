@@ -4,4 +4,4 @@
 ## Usage: phpunit
 ## Example: "ddev phpunit"
 
-/var/www/html/.ddev/wunderio/core/_run-scripts.sh tooling-phpunit.sh
+/var/www/html/.ddev/wunderio/core/_run-scripts.sh tooling-phpunit.sh "$@"
