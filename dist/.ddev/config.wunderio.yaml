@@ -3,7 +3,7 @@ hooks:
     # Build hook workaround to run composer install on first start.
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
   post-import-db:
-    - exec: "cd $DDEV_COMPOSER_ROOT && drush cache:rebuild -y && drush @local user:login"
+    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
 
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
