@@ -2,6 +2,8 @@ hooks:
   post-start:
     # Build hook workaround to run composer install on first start.
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
+  post-import-db:
+    - exec: "cd $DDEV_COMPOSER_ROOT && drush cache:rebuild -y && drush @local user:login"
 
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
@@ -123,8 +125,8 @@ hooks:
 #   #   - varnish.drupal-project.lndo.site
 
 # events:
-#   post-db-import:
-#     - appserver: "cd $LANDO_WEBROOT && drush cache:rebuild -y && drush @local user:login"
+#+   post-db-import:
+#+     - appserver: "cd $LANDO_WEBROOT && drush cache:rebuild -y && drush @local user:login"
 #   pre-rebuild:
 #     - appserver: "SCRIPT=/app/vendor/wunderio/lando-drupal/scripts/load_extensions.sh && [ -f \"$SCRIPT\" ] && bash \"$SCRIPT\" || true"
 
