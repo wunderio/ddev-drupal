@@ -28,10 +28,10 @@ hooks:
 #     description: "Runs Composer commands"
 #     cmd:
 #       - appserver: /usr/local/bin/composer
-#   grumphp:
-#     description: "Runs grumphp commands"
-#     cmd:
-#       - appserver: ./vendor/bin/grumphp
+#+   grumphp:
+#+     description: "Runs grumphp commands"
+#+     cmd:
+#+       - appserver: ./vendor/bin/grumphp
 #+   phpunit:
 #+     description: "Runs PHPUnit commands"
 #+     user: www-data
