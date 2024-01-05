@@ -13,7 +13,7 @@
         }
     ],
     "require": {
-        "drupal/core": "^10",
+        "drupal/core": "^8 || ^9 || ^10",
         "composer-plugin-api": "^2.0"
     },
     "require-dev": {
