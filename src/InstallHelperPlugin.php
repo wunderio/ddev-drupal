@@ -135,17 +135,17 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   }
 
   /**
-   * Copy the config.yaml file and the .ddev/wunderio/core directory to the project.
+   * Copy the config.wunderio.yaml file and the dist/.ddev/wunderio/core directory to the project.
    */
   private function deployDdevFiles(): void {
-    // Copy over the .lando/core directory.
-    $src_core = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.ddev/wunderio/core';
-    $dest_core = "{$this->projectDir}/.ddev/wunderio/core";
-    self::rcopy($src_core, $dest_core);
+    // Copy contents of dist folder to project.
+    $distDir = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/dist';
+    $destDir = "{$this->projectDir}";
+    self::rcopy($distDir, $destDir);
 
-    // Copy over the .lando.base.yml file.
-    $src_base = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/.ddev/config.yaml';
-    self::copy($src_base, $this->projectDir);
+    // Copy over the .config.wunderio.yaml file.
+    $src_base = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/dist/.ddev/config.wunderio.yaml';
+    self::copy($src_base, "{$this->projectDir}/.ddev");
   }
 
   /**

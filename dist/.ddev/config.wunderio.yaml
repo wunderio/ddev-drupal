@@ -1,22 +1,9 @@
-type: drupal10
-docroot: web
-php_version: "8.1"
-webserver_type: nginx-fpm
-xdebug_enabled: false
-additional_hostnames: []
-additional_fqdns: []
-database:
-    type: mariadb
-    version: "10.4"
-use_dns_when_possible: true
-composer_version: "2"
-web_environment: []
-
 hooks:
   post-start:
-    - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/custom/appserver-build.sh || true"
-
-disable_settings_management: true
+    # Build hook workaround to run composer install on first start.
+    - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
+  post-import-db:
+    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
 
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
@@ -41,19 +28,19 @@ disable_settings_management: true
 #     description: "Runs Composer commands"
 #     cmd:
 #       - appserver: /usr/local/bin/composer
-#   grumphp:
-#     description: "Runs grumphp commands"
-#     cmd:
-#       - appserver: ./vendor/bin/grumphp
-#   phpunit:
-#     description: "Runs PHPUnit commands"
-#     user: www-data
-#     cmd:
-#       - appserver: "/app/.lando/core/_run-scripts.sh tooling-phpunit.sh"
-#   regenerate-phpunit-config:
-#     description: "Regenerates fresh PHPUnit configuration."
-#     cmd:
-#       - appserver: "/app/.lando/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh"
+#+   grumphp:
+#+     description: "Runs grumphp commands"
+#+     cmd:
+#+       - appserver: ./vendor/bin/grumphp
+#+   phpunit:
+#+     description: "Runs PHPUnit commands"
+#+     user: www-data
+#+     cmd:
+#+       - appserver: "/app/.lando/core/_run-scripts.sh tooling-phpunit.sh"
+#+   regenerate-phpunit-config:
+#+     description: "Regenerates fresh PHPUnit configuration."
+#+     cmd:
+#+       - appserver: "/app/.lando/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh"
 #   varnishadm:
 #     description: "Runs varnishadm commands"
 #     service: varnish
@@ -138,8 +125,8 @@ disable_settings_management: true
 #   #   - varnish.drupal-project.lndo.site
 
 # events:
-#   post-db-import:
-#     - appserver: "cd $LANDO_WEBROOT && drush cache:rebuild -y && drush @local user:login"
+#+   post-db-import:
+#+     - appserver: "cd $LANDO_WEBROOT && drush cache:rebuild -y && drush @local user:login"
 #   pre-rebuild:
 #     - appserver: "SCRIPT=/app/vendor/wunderio/lando-drupal/scripts/load_extensions.sh && [ -f \"$SCRIPT\" ] && bash \"$SCRIPT\" || true"
 
