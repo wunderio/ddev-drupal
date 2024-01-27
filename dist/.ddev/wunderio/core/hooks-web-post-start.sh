@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #
-# Helper script to run appserver run commands.
+# Helper script to run web post-start commands.
 #
 
 set -exu
