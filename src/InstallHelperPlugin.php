@@ -145,7 +145,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
     // basically this should cover everything that is in the dist/ directory.
     $paths_to_delete = [
       '.ddev/config.wunderio.yaml',
-      '.ddev/commands/',
+      '.ddev/commands/wunderio-core-*',
       '.ddev/wunderio/core/',
       '.ddev/wunderio/custom/.gitignore',
       'drush/sites/local.site.yml',
@@ -159,7 +159,15 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
       elseif (is_dir($full_delete_path)) {
         self::rDelete($full_delete_path);
       }
-      else {
+      elseif (strpos($path, '*') !== FALSE) {
+        $files = glob($full_delete_path);
+        foreach($files as $file){
+          if(is_file($file)){
+            unlink($file);
+          }
+        }
+      }
+      else{
         $this->io->write("The path is neither a file nor a directory. Can't delete: {$full_delete_path}");
       }
     }
