@@ -4,6 +4,11 @@ hooks:
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
   post-import-db:
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
+web_environment:
+# Both this project and wunderio/lando-drupal use the same file
+# at drush/sites/local.site.yml. To make sure that the local alias
+# is working, we need to set the same environment variables here.
+- LANDO_WEBROOT=$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT
 
 # below is lando setup from wunderio/lando-drupal
 # temporarily keeping this here until we have something similar implemented in DDEV
