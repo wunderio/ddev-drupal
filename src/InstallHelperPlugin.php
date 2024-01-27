@@ -160,9 +160,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
         self::rDelete($full_delete_path);
       }
       elseif (strpos($full_delete_path, '*') !== FALSE) {
-        $this->io->write("Globbing files");
         $files = glob($full_delete_path);
-        $this->io->write("Deleting files: " . implode(', ', $files));
         foreach($files as $file){
           if(is_file($file)){
             unlink($file);
