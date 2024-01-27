@@ -145,7 +145,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
     // basically this should cover everything that is in the dist/ directory.
     $paths_to_delete = [
       '.ddev/config.wunderio.yaml',
-      '.ddev/commands/wunderio-core-*',
+      '.ddev/commands/web/wunderio-core-*',
       '.ddev/wunderio/core/',
       '.ddev/wunderio/custom/.gitignore',
       'drush/sites/local.site.yml',
