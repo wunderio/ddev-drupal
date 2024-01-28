@@ -8,3 +8,4 @@ set -exu
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/app/vendor/bin
 
 ddev status
+ddev drush uli
