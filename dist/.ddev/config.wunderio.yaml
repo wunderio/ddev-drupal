@@ -4,6 +4,7 @@ hooks:
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start-once.sh || true"
     # Script to run on every start.
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start.sh"
+    - exec-host: ".ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
   post-import-db:
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
 web_environment:
