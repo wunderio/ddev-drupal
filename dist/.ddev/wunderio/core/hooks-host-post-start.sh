@@ -8,4 +8,8 @@ set -exu
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/app/vendor/bin
 
 ddev status
-ddev drush uli
+
+# Commands to run if Drupal is working.
+if ddev drush status bootstrap | grep -q 'Successful'; then
+    ddev drush uli
+fi
