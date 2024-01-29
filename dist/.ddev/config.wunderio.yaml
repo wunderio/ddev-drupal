@@ -6,7 +6,7 @@ hooks:
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start.sh"
     - exec-host: ".ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
   post-import-db:
-    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
+    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-db-post-import.sh"
 web_environment:
 # Both this project and wunderio/lando-drupal use the same file
 # at drush/sites/local.site.yml. To make sure that the local alias
