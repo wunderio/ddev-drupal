@@ -1,12 +1,12 @@
 hooks:
+  post-import-db:
+    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-db-post-import.sh"
   post-start:
     # Build hook workaround to run composer install on first start.
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start-once.sh || true"
     # Script to run on every start.
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start.sh"
     - exec-host: ".ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
-  post-import-db:
-    - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-db-post-import.sh"
 web_environment:
 # Both this project and wunderio/lando-drupal use the same file
 # at drush/sites/local.site.yml. To make sure that the local alias
