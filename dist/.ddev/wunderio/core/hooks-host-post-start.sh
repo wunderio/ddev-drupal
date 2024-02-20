@@ -21,15 +21,12 @@ is_drupal_working() {
     # Check if "Successful" is present in the combined output
     if [[ $output == *"Successful"* ]]; then
         # "Successful" found, Drupal is working.
-        echo 'success';
         return 0
     else
         # "Successful" not found, Drupal is not working.
-        echo 'fail';
         return 1
     fi
 }
-
 
 # Commands to run if Drupal is working.
 if is_drupal_working; then
