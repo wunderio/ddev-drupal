@@ -4,7 +4,10 @@
 # Helper script to run PHPUnit.
 #
 
-set -exu
+set -eu
+if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+    set -x
+fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
 if [ ! -f "/var/www/html/phpunit.xml" ]; then

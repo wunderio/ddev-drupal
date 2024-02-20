@@ -1,5 +1,8 @@
 #!/bin/sh
-set -exu
+set -eu
+if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+    set -x
+fi
 
 # Configure PHPUnit tests for the DDEV environment.
 #

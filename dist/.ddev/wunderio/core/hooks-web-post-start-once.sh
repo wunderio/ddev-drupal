@@ -7,7 +7,10 @@
 # command as we have in Lando so we have this instead.
 #
 
-set -exu
+set -eu
+if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+    set -x
+fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
 composer install

@@ -5,7 +5,10 @@
 # same file in .ddev/wunderio/custom folder.
 #
 
-set -exu
+set -eu
+if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+    set -x
+fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
 script_name="$1"
