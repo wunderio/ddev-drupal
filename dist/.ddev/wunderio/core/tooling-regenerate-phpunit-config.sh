@@ -1,8 +1,10 @@
 #!/bin/sh
-set -exu
+set -eu
+if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+    set -x
+fi
 
-# Configure PHPUnit tests for the Lando environment.
-# @see: https://agile.coop/blog/drupal-phpunit-tests-lando/
+# Configure PHPUnit tests for the DDEV environment.
 #
 # Initially this was part of lando build process but we decided
 # to commit the phpunit.xml. Still the functionality of this
@@ -10,13 +12,13 @@ set -exu
 # configuration from core. From time to time it wouldn't hurt
 # try and update the file with 'lando regenerate-phpunit-config'.
 
-PHPUNIT_CONFIG=/app/phpunit.xml
+PHPUNIT_CONFIG=/var/www/html/phpunit.xml
 
 if [ -f "$PHPUNIT_CONFIG" ]; then
   rm "$PHPUNIT_CONFIG"
 fi
 
-cd /app
+cd /var/www/html/
 cp -n web/core/phpunit.xml.dist "$PHPUNIT_CONFIG"
 sed -i 's|tests\/bootstrap\.php|./web/core/tests/bootstrap.php|g' "$PHPUNIT_CONFIG"
 sed -i 's|\.\/tests\/|./web/core/tests/|g' "$PHPUNIT_CONFIG"
