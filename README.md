@@ -1,7 +1,8 @@
 # Wunder template for DDEV Drupal projects
 
 This is a template for DDEV Drupal projects for defining the base DDEV setup for Drupal.
-It comes with predefined config.wunderio.yaml file and .ddev/wunderio/core/ folder.
+It comes with predefined .ddev/config.wunderio.yaml file and .ddev/dist folder which
+contents is copied to your project root.
 
 ## Installation
 
