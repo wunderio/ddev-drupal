@@ -14,35 +14,38 @@ URL will become example.com.ddev.site.
     ddev config --project-type=drupal10 --docroot=web --project-name=example.com
     ```
 
-2. Start DDEV:
+2. Install wunderio/ddev-drupal Composer package with DDEV and restart DDEV:
 
    ```bash
-   ddev start
+   ddev composer require wunderio/ddev-drupal --dev && ddev restart
    ```
 
-3. Install the Composer package:
-
-   ```bash
-   ddev composer require wunderio/ddev-drupal --dev
-   ```
-
-4. Restart DDEV:
-
-   ```bash
-   ddev restart
-   ```
-
-5. Add changes to GIT:
+3. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
 
    ```bash
    git add .ddev/ &&
    git add drush/sites/ &&
-   git add -p composer.json composer.lock
+   git add composer.lock
+   git add -p composer.json web/sites/default/settings.php
+   git commit
    ```
 
-6. Import database:
+   Also note that whenever you update wunderio/ddev-drupal package, you need to add everything under .ddev to GIT.
+
+4. Import database:
 
    ```bash
    ddev import-db --file=some-sql-or-sql.gz.file.sql.gz
    ```
 
+   or install site:
+
+   ```bash
+   ddev drush si
+   ```
+
+5. Create admin link and login:
+
+   ```bash
+   ddev drush uli
+   ```
