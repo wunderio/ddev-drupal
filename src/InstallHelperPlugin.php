@@ -120,8 +120,9 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
 
     self::deployDdevFiles();
 
-    #$output = shell_exec('bash vendor/wunderio/lando-drupal/scripts/load_extensions.sh');
-    #$this->io->write("<info>{$output}</info>");
+    // Run the update-grumphp-command.php script.
+    $output = shell_exec('bash vendor/wunderio/ddev-drupal/scripts/update-grumphp-command.sh');
+    $this->io->write("<info>{$output}</info>");
   }
 
   /**
