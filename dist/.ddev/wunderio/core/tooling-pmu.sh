@@ -4,7 +4,7 @@
 # Helper script to run pmu, but also create temporary module directory if it doesn't exist.
 #
 
-set -eu
+set -u
 if [ -n "${WUNDERIO_DEBUG:-}" ]; then
     set -x
 fi
