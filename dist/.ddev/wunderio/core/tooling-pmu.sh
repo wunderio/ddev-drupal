@@ -26,7 +26,7 @@ if [ ! -d "web/modules/contrib/$module_name" ] && [ ! -d "web/modules/custom/$mo
     echo "Creating directory for module $module_name..."
     mkdir -p "web/modules/custom/$module_name"
 
-    # Create the .info.yml file inside the directory
+    # Create dummy module.
     touch "web/modules/custom/$module_name/$module_name.info.yml"
     echo "name: 'Dummy module created by ddev pmu'" >> "web/modules/custom/$module_name/$module_name.info.yml"
     echo "type: module" >> "web/modules/custom/$module_name/$module_name.info.yml"
