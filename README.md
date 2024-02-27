@@ -26,8 +26,8 @@ URL will become example.com.ddev.site.
    ```bash
    git add .ddev/ &&
    git add drush/sites/ &&
-   git add composer.lock
-   git add -p composer.json web/sites/default/settings.php
+   git add composer.lock &&
+   git add -p composer.json web/sites/default/settings.php grumphp.yml &&
    git commit
    ```
 
