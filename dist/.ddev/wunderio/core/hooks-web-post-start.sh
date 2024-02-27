@@ -10,6 +10,8 @@ if [ -n "${WUNDERIO_DEBUG:-}" ]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
+source .ddev/wunderio/core/_helpers.sh
+
 # Function to check if Drupal is working.
 is_drupal_working() {
     # Drush 11 and older.
@@ -34,7 +36,6 @@ if is_drupal_working; then
     color_green="\033[38;5;70m"
     color_reset="\033[0m"
 
-    printf "${color_green}Drupal is working, running drush uli: "
-    drush uli
-    printf "${color_reset}"
+    uli_link=$(ddev drush uli)
+    display_status_message "Drupal is working, running drush uli: $uli_link"
 fi
