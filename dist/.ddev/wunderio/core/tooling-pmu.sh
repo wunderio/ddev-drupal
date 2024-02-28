@@ -1,47 +1,60 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Helper script to run pmu, but also create temporary module directory if it doesn't exist.
 #
 
 set -u
-if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
-# Define the module machine name passed as an argument
-module_name="$1"
-
-if [ -z "$module_name" ]; then
-    echo "Please provide the module machine name as an argument."
-    exit 0
+if [[ "$#" -lt 1 ]]; then
+  echo "Usage: ddev pmu <module1> <module2> ..."
+  exit 0
 fi
+
+modules="$1"
 
 cd /var/www/html
 
-# Check if the module directory exists.
-if [ ! -d "web/modules/contrib/$module_name" ] && [ ! -d "web/modules/custom/$module_name" ] && [ ! -d "web/core/modules/$module_name" ]; then
-    # If the directory doesn't exist, create it
-    echo "Creating directory for module $module_name..."
-    mkdir -p "web/modules/custom/$module_name"
+disable_module() {
+    local module_name="$1"
 
-    # Create dummy module.
-    touch "web/modules/custom/$module_name/$module_name.info.yml"
-    echo "name: 'Dummy module created by ddev pmu'" >> "web/modules/custom/$module_name/$module_name.info.yml"
-    echo "type: module" >> "web/modules/custom/$module_name/$module_name.info.yml"
-    echo "core_version_requirement: ^9 || ^10 || ^11" >> "web/modules/custom/$module_name/$module_name.info.yml"
+    local module_path="web/modules/custom/$module_name"
+
+    # Check if the module directory exists.
+    local module_exists=0
+    if [ -d "web/modules/contrib/$module_name" ] || [ -d "$module_path" ] || [ -d "web/core/modules/$module_name" ]; then
+        module_exists=1
+    fi
+
+    # Create dummy module if the module directory doesn't exist.
+    if [ $module_exists -eq 0 ]; then
+        echo "Creating directory for module $module_name..."
+        mkdir -p "$module_path"
+        touch "$module_path/$module_name.info.yml"
+        echo "name: 'Dummy module created by ddev pmu'" > "$module_path/$module_name.info.yml"
+        echo "type: module" >> "$module_path/$module_name.info.yml"
+        echo "core_version_requirement: ^9 || ^10 || ^11" >> "$module_path/$module_name.info.yml"
+
+        # Clear caches to make the module available.
+        drush cr
+    fi
 
     # Run "drush pmu" command.
     echo "Disabling module $module_name..."
-    drush cr
     drush pmu -y "$module_name"
 
-    # Remove the temporary directory.
-    echo "Removing directory for module $module_name..."
-    rm -rf "web/modules/custom/$module_name"
-else
-    # Run "drush pmu" command.
-    echo "Disabling module $module_name..."
-    drush pmu -y "$module_name"
-fi
+    # Remove dummy module if it was created.
+    if [ $module_exists -eq 0 ]; then
+        echo "Removing directory for module $module_name..."
+        rm -rf "$module_path"
+    fi
+}
+
+for module in $*
+do
+  disable_module "$module"
+done
