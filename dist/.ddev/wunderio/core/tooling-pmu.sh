@@ -32,7 +32,6 @@ disable_module() {
 
     # Create dummy module if the module directory doesn't exist.
     if [ $module_exists -eq 0 ]; then
-        echo "Creating directory for module $module_name..."
         mkdir -p "$module_path"
         touch "$module_path/$module_name.info.yml"
         echo "name: 'Dummy module created by ddev pmu'" > "$module_path/$module_name.info.yml"
@@ -49,7 +48,6 @@ disable_module() {
 
     # Remove dummy module if it was created.
     if [ $module_exists -eq 0 ]; then
-        echo "Removing directory for module $module_name..."
         rm -rf "$module_path"
     fi
 }
