@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Helper script to run web post-start commands.
@@ -33,9 +33,6 @@ is_drupal_working() {
 
 # Commands to run if Drupal is working.
 if is_drupal_working; then
-    color_green="\033[38;5;70m"
-    color_reset="\033[0m"
-
-    uli_link=$(ddev drush uli)
+    uli_link=$(drush uli)
     display_status_message "Drupal is working, running drush uli: $uli_link"
 fi

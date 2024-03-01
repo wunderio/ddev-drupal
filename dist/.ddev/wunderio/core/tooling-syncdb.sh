@@ -23,8 +23,6 @@ prod_ssh_user=$(echo "$prod_alias" | grep -Po '(?<=user: )\S+')
 prod_ssh_options=$(echo "$prod_alias" | grep -Po "(?<=options: ')[^']+(?=')")
 prod_ssh_host=$(echo "$prod_alias" | grep -Po '(?<=host: )\S+')
 
-echo "Dropping local database."
-ddev drush sql-drop -y
 echo "Dumping production database to $sql_file."
 ssh "$prod_ssh_user@$prod_ssh_host" "$prod_ssh_options" "drush sql-dump --structure-tables-list=cache,cache_*,history,search_*,sessions" > "$sql_file"
 echo "Importing production database."
