@@ -19,9 +19,9 @@ sql_file="prod-syncdb-$(date +'%Y-%m-%d').sql"
 # Read the production alias from the drush configuration.
 # For some reason "ddev drush sql-sync @prod @local -y" does not work and times out.
 prod_alias=$(ddev drush sa @prod)
-prod_ssh_user=$(echo "$prod_alias" | grep -Po '(?<=user: )\S+')
-prod_ssh_options=$(echo "$prod_alias" | grep -Po "(?<=options: ')[^']+(?=')")
-prod_ssh_host=$(echo "$prod_alias" | grep -Po '(?<=host: )\S+')
+prod_ssh_user=$(echo "$prod_alias" | ddev yq '.\"@self.prod\".user' )
+prod_ssh_options=$(echo "$prod_alias" | ddev yq '.\"@self.prod\".ssh.options' )
+prod_ssh_host=$(echo "$prod_alias" | ddev yq '.\"@self.prod\".host' )
 
 echo "Dumping production database to $sql_file."
 ssh "$prod_ssh_user@$prod_ssh_host" "$prod_ssh_options" "drush sql-dump --structure-tables-list=cache,cache_*,history,search_*,sessions" > "$sql_file"
