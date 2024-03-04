@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 set -eu
-if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
 
