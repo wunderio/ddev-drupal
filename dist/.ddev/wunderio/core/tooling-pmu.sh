@@ -33,9 +33,8 @@ disable_module() {
     # Create dummy module if the module directory doesn't exist.
     if [ $module_exists -eq 0 ]; then
         mkdir -p "$module_path"
-        touch "$module_path/$module_name.info.yml"
-        echo "name: 'Dummy module created by ddev pmu'" > "$module_path/$module_name.info.yml"
-        echo "type: module" >> "$module_path/$module_name.info.yml"
+        echo "name: 'Dummy module created by ddev pmu'"    > "$module_path/$module_name.info.yml"
+        echo "type: module"                               >> "$module_path/$module_name.info.yml"
         echo "core_version_requirement: ^9 || ^10 || ^11" >> "$module_path/$module_name.info.yml"
 
         # Clear caches to make the module available.
