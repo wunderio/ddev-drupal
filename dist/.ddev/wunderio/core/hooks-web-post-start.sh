@@ -1,14 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Helper script to run web post-start commands.
 #
 
 set -eu
-if [ -n "${WUNDERIO_DEBUG:-}" ]; then
+if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
+
+source .ddev/wunderio/core/_helpers.sh
 
 # Function to check if Drupal is working.
 is_drupal_working() {
@@ -31,10 +33,6 @@ is_drupal_working() {
 
 # Commands to run if Drupal is working.
 if is_drupal_working; then
-    color_green="\033[38;5;70m"
-    color_reset="\033[0m"
-
-    printf "${color_green}Drupal is working, running drush uli: "
-    drush uli
-    printf "${color_reset}"
+    uli_link=$(drush uli)
+    display_status_message "Drupal is working, running drush uli: $uli_link"
 fi
