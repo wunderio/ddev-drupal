@@ -74,9 +74,11 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
     return [
       PackageEvents::POST_PACKAGE_INSTALL => [
         ['onWunderIoDdevDrupalPackageInstall', 0],
+        ['onWunderIoDdevUpdateCheck', 0],
       ],
       PackageEvents::POST_PACKAGE_UPDATE => [
         ['onWunderIoDdevDrupalPackageInstall', 0],
+        ['onWunderIoDdevUpdateCheck', 0],
       ],
     ];
   }
@@ -92,6 +94,27 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * {@inheritdoc}
    */
   public function uninstall(Composer $composer, IOInterface $io) {
+  }
+
+  /**
+   * Update check event callback.
+   */
+  public function onWunderIoDdevUpdateCheck(PackageEvent $event) {
+    $current_package = $event->getOperation()->getPackage();
+    $current_package_name = $current_package->getName();
+
+    print_r($current_package);
+    print_r($current_package_name);
+
+    $output = shell_exec('bash vendor/wunderio/ddev-drupal/scripts/update_check.sh');
+    $this->io->write("<info>{$output}</info>");
+
+    // // We only want to continue for this package.
+    // if ($current_package_name !== self::PACKAGE_NAME) {
+    //   return NULL;
+    // }
+
+    // self::deployDdevFiles();
   }
 
   /**
