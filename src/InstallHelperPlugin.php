@@ -100,10 +100,18 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * Update check event callback.
    */
   public function onWunderIoDdevUpdateCheck(PackageEvent $event) {
-    $current_package = $event->getOperation()->getPackage();
+    /** @var \Composer\DependencyResolver\Operation\InstallOperation $operation */
+    $operation = $event->getOperation();
+
+    // Composer operations have access to packages, just through different
+    // methods, which depend on whether the operation is an InstallOperation or
+    // an UpdateOperation
+    $current_package = method_exists($operation, 'getPackage')
+      ? $operation->getPackage()
+      : $operation->getInitialPackage();
+
     $current_package_name = $current_package->getName();
 
-    print_r($current_package);
     print_r($current_package_name);
 
     $output = shell_exec('bash vendor/wunderio/ddev-drupal/scripts/update_check.sh');
