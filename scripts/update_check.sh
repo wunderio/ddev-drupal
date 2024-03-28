@@ -21,13 +21,13 @@ get_latest_version() {
     # Remove leading and trailing spaces
     version=$(echo "$version" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
 
-    # Print the latest version
     echo "$version"
 }
 
 # Get the current version from the first argument.
 current_version=$1
 
+# Get the latest version from Composer.
 latest_version=$(get_latest_version)
 
 # Compare the current version with the latest version.
