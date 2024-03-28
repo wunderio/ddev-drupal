@@ -7,6 +7,12 @@
 set -exu
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
+# Get the current version from the first argument
+current_version=$1
+
+echo "Current version is: $current_version"
+
+
 # Prompt the user with a yes or no question
 read -p "Do you want to continue? (yes/no): " answer
 
