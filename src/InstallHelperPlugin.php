@@ -24,6 +24,17 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   private const PACKAGE_NAME = 'wunderio/ddev-drupal';
 
   /**
+   * Flag to check if update check has been done.
+   *
+   * We don't want to ask user multiple times if they want to
+   * update the ddev-drupal package. Without this it would ask
+   * for each package that is updated or installed.
+   *
+   * @var bool
+   */
+  private static $updateCheckDone = FALSE;
+
+  /**
    * The Composer service.
    *
    * @var \Composer\Composer
@@ -100,6 +111,10 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * Update check event callback.
    */
   public function onWunderIoDdevUpdateCheck(PackageEvent $event) {
+    if (self::$updateCheckDone) {
+      return NULL;
+    }
+
     /** @var \Composer\DependencyResolver\Operation\InstallOperation $operation */
     $operation = $event->getOperation();
 
@@ -120,6 +135,8 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
     $current_package_version = $current_package->getPrettyVersion();
 
     shell_exec("bash vendor/wunderio/ddev-drupal/scripts/update_check.sh $current_package_version");
+
+    self::$updateCheckDone = true;
   }
 
   /**

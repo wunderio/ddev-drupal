@@ -36,10 +36,8 @@ if [[ $current_version == $latest_version ]]; then
     exit 0
 fi
 
-echo "A newer version of wunderio/ddev-drupal is available. Current version is: $current_version, latest version is: $latest_version."
-
 # Prompt the user with a yes or no question.
-read -rp "Do you want update to latest version? (yes/no): [y] " answer
+read -rp "A newer version of wunderio/ddev-drupal is available. Do you want update to latest version? (yes/no): [y] " answer
 
 # Convert the input to lowercase for case-insensitive comparison.
 answer=${answer,,}
