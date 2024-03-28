@@ -53,5 +53,5 @@ if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     git status
     echo "Please verify the above wunderio/ddev-drupal changes before committing."
 else
-    echo "Skipping the update."
+    echo "Skipping the wunderio/ddev-drupal update."
 fi

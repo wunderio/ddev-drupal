@@ -134,7 +134,8 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
 
     $current_package_version = $current_package->getPrettyVersion();
 
-    shell_exec("bash vendor/wunderio/ddev-drupal/scripts/update_check.sh $current_package_version");
+    $output = shell_exec("bash vendor/wunderio/ddev-drupal/scripts/update_check.sh $current_package_version");
+    $this->io->write("<info>{$output}</info>");
 
     self::$updateCheckDone = true;
   }
