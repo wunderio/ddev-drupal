@@ -59,6 +59,7 @@ answer=${answer:-y}
 # Check the user's input and perform actions accordingly
 if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     composer require wunderio/ddev-drupal --dev
+    echo ""
     echo "Staging the changes to GIT. "
     read -rp "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock' (yes/no): [y] " answer2
     # Convert the input to lowercase for case-insensitive comparison.
@@ -67,7 +68,7 @@ if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     answer2=${answer2:-y}
     if [[ $answer2 == "yes" ]] || [[ $answer2 == "y" ]]; then
         git add .ddev/ composer.json composer.lock
-        echo "Please verify the staged changes and commit (git status / git commit)."
+        echo "Done! Please verify the staged changes and commit (git status / git commit)."
     else
         echo "Skipping the GIT staging. You need to manually stage the changes to GIT."
     fi
