@@ -27,7 +27,7 @@ get_latest_version() {
 # Get the current version of a package via Composer.
 get_current_version() {
     # Check the installed version of the package
-    current_version=$(composer show --all | grep 'wunderio/ddev-drupal' | awk '{print $2}')
+    current_version=$(composer show | grep 'wunderio/ddev-drupal' | awk '{print $2}')
 
     echo "$current_version"
 }
