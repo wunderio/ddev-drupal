@@ -24,17 +24,6 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   private const PACKAGE_NAME = 'wunderio/ddev-drupal';
 
   /**
-   * Flag to check if update check has been done.
-   *
-   * We don't want to ask user multiple times if they want to
-   * update the ddev-drupal package. Without this it would ask
-   * for each package that is updated or installed.
-   *
-   * @var bool
-   */
-  private static $updateCheckDone = FALSE;
-
-  /**
    * The Composer service.
    *
    * @var \Composer\Composer
@@ -85,11 +74,9 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
     return [
       PackageEvents::POST_PACKAGE_INSTALL => [
         ['onWunderIoDdevDrupalPackageInstall', 0],
-        ['onWunderIoDdevUpdateCheck', 0],
       ],
       PackageEvents::POST_PACKAGE_UPDATE => [
         ['onWunderIoDdevDrupalPackageInstall', 0],
-        ['onWunderIoDdevUpdateCheck', 0],
       ],
     ];
   }
@@ -105,39 +92,6 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * {@inheritdoc}
    */
   public function uninstall(Composer $composer, IOInterface $io) {
-  }
-
-  /**
-   * Update check event callback.
-   */
-  public function onWunderIoDdevUpdateCheck(PackageEvent $event) {
-    if (self::$updateCheckDone) {
-      return NULL;
-    }
-
-    /** @var \Composer\DependencyResolver\Operation\InstallOperation $operation */
-    $operation = $event->getOperation();
-
-    // Composer operations have access to packages, just through different
-    // methods, which depend on whether the operation is an InstallOperation or
-    // an UpdateOperation
-    $current_package = method_exists($operation, 'getPackage')
-      ? $operation->getPackage()
-      : $operation->getInitialPackage();
-
-    $current_package_name = $current_package->getName();
-
-    // We only want to continue for other packages.
-    if ($current_package_name === self::PACKAGE_NAME) {
-      return NULL;
-    }
-
-    $current_package_version = $current_package->getPrettyVersion();
-
-    $output = shell_exec("bash vendor/wunderio/ddev-drupal/scripts/update_check.sh $current_package_version");
-    $this->io->write("<info>{$output}</info>");
-
-    self::$updateCheckDone = true;
   }
 
   /**

@@ -2,6 +2,8 @@ hooks:
   post-start:
     # Build hook workaround to run composer install on first start.
     - exec: "[ ! -d \"/var/www/html/vendor\" ] && /var/www/html/.ddev/wunderio/core/_run-scripts.sh services-appserver-build.sh || true"
+    # Wunderio/ddev-drupal update check.
+    - exec: "UPDATE_SCRIPT=\"/var/www/html/vendor/wunderio/ddev-drupal/scripts/update_check.sh\"; [ -f \"$UPDATE_SCRIPT\" ] && $UPDATE_SCRIPT || true"
   post-import-db:
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-post-import-db.sh"
 

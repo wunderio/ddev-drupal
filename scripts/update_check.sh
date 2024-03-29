@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Update check script executed on Composer update and install.
+# Wunderio/ddev-drupal package update check executed after DDEV has started.
 #
 
 set -eu
@@ -24,8 +24,16 @@ get_latest_version() {
     echo "$version"
 }
 
+# Get the current version of a package via Composer.
+get_current_version() {
+    # Check the installed version of the package
+    current_version=$(composer show --all | grep 'wunderio/ddev-drupal' | awk '{print $2}')
+
+    echo "$current_version"
+}
+
 # Get the current version from the first argument.
-current_version=$1
+current_version=$(get_current_version)
 
 # Get the latest version from Composer.
 latest_version=$(get_latest_version)
