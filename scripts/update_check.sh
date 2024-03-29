@@ -45,6 +45,9 @@ if [[ $current_version == $latest_version ]]; then
 fi
 
 # Prompt the user with a yes or no question.
+# Separate the prompt from the rest of the output for
+# better readability.
+echo ""
 echo "A newer version of wunderio/ddev-drupal is available."
 read -rp "Do you want update to latest version? This will run 'composer require wunderio/ddev-drupal --dev' (yes/no): [y] " answer
 
