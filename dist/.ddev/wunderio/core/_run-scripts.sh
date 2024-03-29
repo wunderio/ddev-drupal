@@ -1,19 +1,22 @@
-#!/bin/sh
+#!/bin/bash
 
 #
 # Helper script to run other scripts and allow overriding them by having the
 # same file in .ddev/wunderio/custom folder.
 #
 
-set -exu
+set -eu
+if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
+    set -x
+fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
 script_name="$1"
 # Remove the first argument (the script name) to get the remaining arguments
 shift 1
 
-custom_script="/var/www/html/.ddev/wunderio/custom/$script_name"
-core_script="/var/www/html/.ddev/wunderio/core/$script_name"
+custom_script=".ddev/wunderio/custom/$script_name"
+core_script=".ddev/wunderio/core/$script_name"
 
 # Check if the custom script exists and is executable
 if [ -x "$custom_script" ]; then
