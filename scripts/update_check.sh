@@ -45,11 +45,11 @@ if [[ $current_version == $latest_version ]]; then
 fi
 
 # Prompt the user with a yes or no question.
-read -rp "A newer version of wunderio/ddev-drupal is available. Do you want update to latest version? (yes/no): [y] " answer
+echo "A newer version of wunderio/ddev-drupal is available."
+read -rp "Do you want update to latest version? This will run 'composer require wunderio/ddev-drupal --dev' (yes/no): [y] " answer
 
 # Convert the input to lowercase for case-insensitive comparison.
 answer=${answer,,}
-
 # If the answer is empty (user pressed Enter), default to "y".
 answer=${answer:-y}
 
@@ -57,9 +57,18 @@ answer=${answer:-y}
 if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     composer require wunderio/ddev-drupal --dev
     echo "Staging the changes to GIT. "
-    git add .ddev composer.json composer.lock
-    git status
-    echo "Please verify the above wunderio/ddev-drupal changes before committing."
+    read -rp "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock' (yes/no): [y] " answer2
+    # Convert the input to lowercase for case-insensitive comparison.
+    answer2=${answer2,,}
+    # If the answer is empty (user pressed Enter), default to "y".
+    answer2=${answer2:-y}
+    if [[ $answer2 == "yes" ]] || [[ $answer2 == "y" ]]; then
+        git add .ddev/ composer.json composer.lock
+        echo "Please verify the staged changes and commit (git status / git commit)."
+    else
+        echo "Skipping the GIT staging. You need to manually stage the changes to GIT."
+    fi
 else
     echo "Skipping the wunderio/ddev-drupal update."
 fi
+
