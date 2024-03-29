@@ -71,4 +71,3 @@ if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
 else
     echo "Skipping the wunderio/ddev-drupal update."
 fi
-
