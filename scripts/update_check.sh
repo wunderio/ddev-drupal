@@ -10,6 +10,8 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
+source /var/www/html/.ddev/wunderio/core/_helpers.sh
+
 # Get the latest version of a package via Composer.
 get_latest_version() {
     # Run composer show to get information about the package
@@ -48,8 +50,8 @@ fi
 # Separate the prompt from the rest of the output for
 # better readability.
 echo ""
-echo "A newer version of wunderio/ddev-drupal is available."
-read -rp "Do you want update to latest version? This will run 'composer require wunderio/ddev-drupal --dev' (yes/no): [y] " answer
+display_status_message "A newer version of wunderio/ddev-drupal is available."
+read -rp "$(display_status_message "Do you want to update to the latest version? This will run 'composer require wunderio/ddev-drupal --dev' (yes/no): [y] ")" answer
 
 # Convert the input to lowercase for case-insensitive comparison.
 answer=${answer,,}
@@ -60,18 +62,18 @@ answer=${answer:-y}
 if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     composer require wunderio/ddev-drupal --dev
     echo ""
-    echo "Staging the changes to GIT. "
-    read -rp "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock' (yes/no): [y] " answer2
+    display_status_message "Staging the changes to GIT. "
+    read -rp "$(display_status_message "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock' (yes/no): [y] ")" answer2
     # Convert the input to lowercase for case-insensitive comparison.
     answer2=${answer2,,}
     # If the answer is empty (user pressed Enter), default to "y".
     answer2=${answer2:-y}
     if [[ $answer2 == "yes" ]] || [[ $answer2 == "y" ]]; then
         git add .ddev/ composer.json composer.lock
-        echo "Done! Please verify the staged changes and commit (git status / git commit)."
+        display_status_message "Done! Please verify the staged changes and commit (git status / git commit)."
     else
-        echo "Skipping the GIT staging. You need to manually stage the changes to GIT."
+        display_status_message "Skipping the GIT staging. You need to manually stage the changes to GIT."
     fi
 else
-    echo "Skipping the wunderio/ddev-drupal update."
+    display_status_message "Skipping the wunderio/ddev-drupal update."
 fi
