@@ -9,6 +9,8 @@ hooks:
     - exec-host: ".ddev/wunderio/core/_run-scripts.sh hooks-host-post-start.sh"
     # Script to run on every start.
     - exec: "/var/www/html/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start.sh"
+    # Wunderio/ddev-drupal update check.
+    - exec: "UPDATE_SCRIPT=\"/var/www/html/vendor/wunderio/ddev-drupal/scripts/update_check.sh\"; [ -f \"$UPDATE_SCRIPT\" ] && $UPDATE_SCRIPT || true"
 web_environment:
 # Both this project and wunderio/lando-drupal use the same file
 # at drush/sites/local.site.yml. To make sure that the local alias
