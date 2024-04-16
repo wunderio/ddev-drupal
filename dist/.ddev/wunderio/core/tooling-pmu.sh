@@ -36,10 +36,10 @@ disable_module() {
         echo "name: 'Dummy module created by ddev pmu'"    > "$module_path/$module_name.info.yml"
         echo "type: module"                               >> "$module_path/$module_name.info.yml"
         echo "core_version_requirement: ^9 || ^10 || ^11" >> "$module_path/$module_name.info.yml"
-
-        # Clear caches to make the module available.
-        drush cr
     fi
+
+    # Clear caches to make the module available.
+    drush cr
 
     # Run "drush pmu" command.
     echo "Disabling module $module_name..."
