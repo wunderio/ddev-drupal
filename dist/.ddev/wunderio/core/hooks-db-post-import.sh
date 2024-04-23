@@ -12,7 +12,12 @@ export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bi
 
 source /var/www/html/.ddev/wunderio/core/_helpers.sh
 
-cd $DDEV_COMPOSER_ROOT && drush cache:rebuild -y && drush sqlsan -y
+cd $DDEV_COMPOSER_ROOT
+drush cache:rebuild -y
+drush config:import -y
+drush cache:rebuild -y
+drush updatedb -y
+drush sql:sanitize -y
 
 uli_link=$(drush uli)
 display_status_message "Drupal is working, running drush uli: $uli_link"
