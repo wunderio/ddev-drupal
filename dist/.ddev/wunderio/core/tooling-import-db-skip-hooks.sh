@@ -13,8 +13,6 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
-source .ddev/wunderio/core/_helpers.sh
-
 # Define the path to the DDEV config file
 CONFIG_FILE=".ddev/config.wunderio.yaml"
 
