@@ -50,3 +50,19 @@ URL will become example.com.ddev.site.
    ```bash
    ddev drush uli
    ```
+
+## Performance Optimization
+
+### Database Operations (Mac-specific)
+
+For better performance with database operations on macOS, the `database_dumps` directory
+is configured to be bind-mounted directly rather than synced via Mutagen. This is done
+through the `upload_dirs` configuration in `.ddev/config.wunderio.yaml`:
+
+```yaml
+upload_dirs:
+  - ../database_dumps
+```
+
+This improves performance when importing/exporting large databases by bypassing
+Mutagen's syncing mechanism, which is only used on macOS.
