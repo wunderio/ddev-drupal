@@ -1,8 +1,72 @@
 # Wunder template for DDEV Drupal projects
 
-This is a template for DDEV Drupal projects for defining the base DDEV setup for Drupal.
-It comes with predefined .ddev/config.wunderio.yaml file and .ddev/dist folder which
-contents is copied to your project root.
+This project extends the standard [DDEV](https://ddev.com/) setup with additional functionality and tools specifically
+designed for Drupal development. It provides a set of custom commands, configurations, and automation
+scripts to enhance your Drupal development workflow.
+
+## Features
+
+### Custom DDEV Commands
+
+- `pmu`: Runs drush pmu commands and creates dummy module folders if they don't exist.
+  This helps to uninstall module that has gone missing for example during branch
+  switching.
+  ```bash
+  ddev pmu module1 module2 ...
+  ```
+- `grumphp`: Runs GrumPHP commands
+  ```bash
+  ddev grumphp
+  ```
+- `phpunit`: Runs PHPUnit commands
+  ```bash
+  ddev phpunit
+  ```
+- `regenerate-phpunit-config`: Regenerates fresh PHPUnit configuration
+  ```bash
+  ddev regenerate-phpunit-config
+  ```
+- `syncdb`: Synchronizes local database with production.
+  For this you should have set prod alias in drush/sites/self.site.yml
+  ```bash
+  ddev syncdb
+  ```
+- `yq`: Runs [yq](https://mikefarah.gitbook.io/yq) commands (YAML processor)
+  It's available inside DDEV, but we expose it to host because why not :). It's required in syncdb script, but it could prove useful in day to day work.
+  ```bash
+  ddev yq
+  ```
+
+### Enhanced Configuration
+
+1. **Custom DDEV Configuration**
+   - Post-start scripts for both host and web containers - by default it gives you uli link.
+   - Automatic update checks for this package
+
+2. **Performance Optimizations**
+   - Special `database_dumps/` directory for Mac users not to mount db dumps
+
+### Automated Workflows
+
+The project includes several automated workflows:
+
+1. **Database Management**
+   - Post-import database hooks (clears cache, sanitizes database)
+   - Post-restore snapshot hooks (clears cache, sanitizes database)
+   - Database synchronization from production
+
+2. **Development Environment Setup**
+   - Automatic composer installation on first start
+   - Post-start hook that run drush uli
+   - Integration with Wunderio's development tools eg grumphp, phpunit
+
+Both custom commands and hooks are scripts under `dist/.ddev/wunderio/core/` folder
+and you can extend them if you copy particular script to `dist/.ddev/wunderio/custom/`.
+This folder is never overwritten during autoupdate.
+
+## Requirements
+
+- [DDEV](https://ddev.com/)
 
 ## Installation
 
