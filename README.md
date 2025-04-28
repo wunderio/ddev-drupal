@@ -53,16 +53,48 @@ URL will become example.com.ddev.site.
 
 ## Performance Optimization
 
-### Database Operations (Mac-specific)
+### Database Operations for Mac Users
 
-For better performance with database operations on macOS, the `database_dumps` directory
-is configured to be bind-mounted directly rather than synced via Mutagen. This is done
-through the `upload_dirs` configuration in `.ddev/config.wunderio.yaml`:
+**Important for Mac users:** When working with database imports and exports on macOS, you should store your database
+dump files in the `database_dumps` directory at the project root. This directory is specially configured in this
+template to provide specific performance benefits.
+
+```
+project-root/
+├── database_dumps/    <- Place your .sql or .sql.gz files here
+├── web/
+├── .ddev/
+└── ...
+```
+
+**Key benefits:**
+
+1. **Faster DDEV startup times:** When large database files are stored in the standard project directories,
+they can significantly slow down DDEV startup as Mutagen indexes and syncs these files. Using the `database_dumps`
+directory avoids this overhead.
+
+2. **Reduced virtual disk usage:** By excluding database dumps from Mutagen synchronization, your virtual disk
+requires less space, preventing potential disk space issues.
+
+This optimization is configured via `upload_dirs` in `.ddev/config.wunderio.yaml`:
 
 ```yaml
 upload_dirs:
   - ../database_dumps
 ```
 
-This improves performance when importing/exporting large databases by bypassing
-Mutagen's syncing mechanism, which is only used on macOS.
+**Example usage:**
+```bash
+# Save your database dumps to the database_dumps directory
+cp ~/Downloads/my-database-backup.sql.gz ./database_dumps/
+
+# Then import using the path relative to your project
+ddev import-db --file=database_dumps/my-database-backup.sql.gz
+```
+
+This improvement is particularly noticeable in projects with multiple or large database dumps, where
+startup times can be reduced from minutes to seconds.
+
+**Note for Linux users:** While this configuration doesn't provide performance improvements on Linux
+systems (which don't use Mutagen), it's still good practice to store database dumps in the
+dedicated `database_dumps` folder for consistent organization across team environments.
