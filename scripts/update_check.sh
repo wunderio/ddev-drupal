@@ -17,8 +17,17 @@ get_latest_version() {
     # Run composer show to get information about the package
     package_info=$(composer show wunderio/ddev-drupal --all)
 
-    # Extract the versions and get the latest one
+    # Extract the versions and get the latest one.
+    # Catches the version from this string:
+    # versions : * 0.5.0, 0.4.0, 0.3.0
     version=$(echo "$package_info" | grep -oP '(?<=versions : \* ).*' | tr -d ' ' | cut -d ',' -f 1)
+
+    # If version is empty, try another way where there is no * for latest version.
+    # Catches the version from this string:
+    # versions : 0.5.0, * 0.4.0, 0.3.0
+    if [[ -z "$version" ]]; then
+        version=$(echo "$package_info" | grep -oP '(?<=versions : ).*' | tr -d ' ' | cut -d ',' -f 1)
+    fi
 
     # Remove leading and trailing spaces
     version=$(echo "$version" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')
@@ -50,7 +59,8 @@ fi
 # Separate the prompt from the rest of the output for
 # better readability.
 echo ""
-display_status_message "A newer version of wunderio/ddev-drupal is available."
+display_status_message "A newer version of wunderio/ddev-drupal is available (current: $current_version, latest: $latest_version)."
+display_status_message "See what's new: https://github.com/wunderio/ddev-drupal/releases"
 read -rp "$(display_status_message "Do you want to update to the latest version? This will run 'composer require wunderio/ddev-drupal --dev' (yes/no): [y] ")" answer
 
 # Convert the input to lowercase for case-insensitive comparison.
