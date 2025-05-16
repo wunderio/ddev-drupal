@@ -14,6 +14,11 @@ scripts to enhance your Drupal development workflow.
   ```bash
   ddev pmu module1 module2 ...
   ```
+- `twig-debug`: Toggles Drupal Twig debugging on/off. Useful for template development.
+  ```bash
+  ddev twig-debug        # Enable Twig debugging
+  ddev twig-debug off    # Disable Twig debugging
+  ```
 - `grumphp`: Runs GrumPHP commands
   ```bash
   ddev grumphp
