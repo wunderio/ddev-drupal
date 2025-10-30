@@ -97,13 +97,13 @@ URL will become example.com.ddev.site.
    ddev composer require wunderio/ddev-drupal --dev && ddev restart
    ```
 
-4. Ignore this composer plugin managed files from the repo by adding following entries to .gitignore:
+3. Ignore this composer plugin managed files from the repo by adding following entries to .gitignore:
   ```
   .ddev/wunderio/core
   .ddev/commands/*/wunderio-core-*
   ```
 
-5. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
+4. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
 
    ```bash
    git add .ddev/ &&
@@ -115,7 +115,7 @@ URL will become example.com.ddev.site.
 
    Also note that whenever you update wunderio/ddev-drupal package, you need to add everything under .ddev to GIT.
 
-6. Import database:
+5. Import database:
 
    ```bash
    ddev import-db --file=some-sql-or-sql.gz.file.sql.gz
@@ -127,7 +127,7 @@ URL will become example.com.ddev.site.
    ddev drush si
    ```
 
-7. Create admin link and login:
+6. Create admin link and login:
 
    ```bash
    ddev drush uli
