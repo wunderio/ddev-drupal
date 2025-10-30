@@ -19,7 +19,7 @@ if [ -f "$PHPUNIT_CONFIG" ]; then
 fi
 
 cd $DDEV_APPROOT
-cp -n $DDEV_DOCROOT/core/phpunit.xml.dist "$PHPUNIT_CONFIG"
+cp -n "$DDEV_DOCROOT/core/phpunit.xml.dist" "$PHPUNIT_CONFIG"
 sed -i "s|tests\/bootstrap\.php|${DDEV_DOCROOT}/core/tests/bootstrap.php|g" "$PHPUNIT_CONFIG"
 sed -i "s|\.\/tests\/|${DDEV_DOCROOT}/core/tests/|g" "$PHPUNIT_CONFIG"
 sed -i "s|directory>\.\/|directory>${DDEV_DOCROOT}/core/|g" "$PHPUNIT_CONFIG"
