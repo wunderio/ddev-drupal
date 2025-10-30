@@ -4,4 +4,4 @@
 ## Usage: grumphp
 ## Example: "ddev grumphp"
 
-$DDEV_COMPOSER_ROOT/vendor/bin/grumphp "$@"
+$DDEV_APPROOT/.ddev/wunderio/core/_run-scripts.sh tooling-grumphp.sh "$@"
