@@ -38,7 +38,7 @@ scripts to enhance your Drupal development workflow.
   ```bash
   ddev regenerate-phpunit-config
   ```
-- `syncdb`: Synchronizes local database with production or silta.
+- `syncdb`: Synchronizes local database with production.
   For production you should have set prod alias in drush/sites/self.site.yml
   ```bash
   ddev syncdb
