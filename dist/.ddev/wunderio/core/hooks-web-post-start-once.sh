@@ -13,4 +13,5 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
+cd $DDEV_COMPOSER_ROOT
 composer install

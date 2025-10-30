@@ -22,12 +22,24 @@ scripts to enhance your Drupal development workflow.
   ```bash
   ddev phpunit
   ```
+- `codecept`: Runs codeception commands
+  ```bash
+  ddev codecept
+  ```
+- `phpcbf`: Runs phpcbf commands
+  ```bash
+  ddev phpcbf
+  ```
+- `phpcs`: Runs PHPcs commands
+  ```bash
+  ddev phpcs
+  ```
 - `regenerate-phpunit-config`: Regenerates fresh PHPUnit configuration
   ```bash
   ddev regenerate-phpunit-config
   ```
-- `syncdb`: Synchronizes local database with production.
-  For this you should have set prod alias in drush/sites/self.site.yml
+- `syncdb`: Synchronizes local database with production or silta.
+  For production you should have set prod alias in drush/sites/self.site.yml
   ```bash
   ddev syncdb
   ```
@@ -85,7 +97,13 @@ URL will become example.com.ddev.site.
    ddev composer require wunderio/ddev-drupal --dev && ddev restart
    ```
 
-3. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
+4. Ignore this composer plugin managed files from the repo by adding following entries to .gitignore:
+  ```
+  .ddev/wunderio/core
+  .ddev/commands/*/wunderio-core-*
+  ```
+
+5. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
 
    ```bash
    git add .ddev/ &&
@@ -97,7 +115,7 @@ URL will become example.com.ddev.site.
 
    Also note that whenever you update wunderio/ddev-drupal package, you need to add everything under .ddev to GIT.
 
-4. Import database:
+6. Import database:
 
    ```bash
    ddev import-db --file=some-sql-or-sql.gz.file.sql.gz
@@ -109,7 +127,7 @@ URL will become example.com.ddev.site.
    ddev drush si
    ```
 
-5. Create admin link and login:
+7. Create admin link and login:
 
    ```bash
    ddev drush uli

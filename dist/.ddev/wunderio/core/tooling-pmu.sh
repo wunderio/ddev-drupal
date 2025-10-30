@@ -17,16 +17,16 @@ fi
 
 modules="$1"
 
-cd /var/www/html
+cd $DDEV_APPROOT
 
 disable_module() {
     local module_name="$1"
 
-    local module_path="web/modules/custom/$module_name"
+    local module_path="$DDEV_DOCROOT/modules/custom/$module_name"
 
     # Check if the module directory exists.
     local module_exists=0
-    if [ -d "web/modules/contrib/$module_name" ] || [ -d "$module_path" ] || [ -d "web/core/modules/$module_name" ]; then
+    if [ -d "$DDEV_DOCROOT/modules/contrib/$module_name" ] || [ -d "$module_path" ] || [ -d "$DDEV_DOCROOT/core/modules/$module_name" ]; then
         module_exists=1
     fi
 
