@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #
-# Synchronise local database with the production or silta environment.
+# Synchronise local database with the production environment.
 #
 # Based on https://github.com/wunderio/unisport/blob/master/.lando/syncdb.sh
 #
