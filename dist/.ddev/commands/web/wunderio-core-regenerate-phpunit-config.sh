@@ -4,4 +4,4 @@
 ## Usage: regenerate-phpunit-config
 ## Example: "ddev regenerate-phpunit-config"
 
-/var/www/html/.ddev/wunderio/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh
+$DDEV_APPROOT/.ddev/wunderio/core/_run-scripts.sh tooling-regenerate-phpunit-config.sh

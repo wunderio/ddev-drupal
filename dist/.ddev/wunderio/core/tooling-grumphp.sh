@@ -10,4 +10,4 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
-php /var/www/html/vendor/bin/grumphp "$@"
+$DDEV_COMPOSER_ROOT/vendor/bin/grumphp "$@"

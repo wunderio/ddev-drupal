@@ -10,7 +10,7 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
-source .ddev/wunderio/core/_helpers.sh
+source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 # Function to check if Drupal is working.
 is_drupal_working() {

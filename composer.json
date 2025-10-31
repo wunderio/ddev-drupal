@@ -13,8 +13,9 @@
         }
     ],
     "require": {
-        "drupal/core": "^10.3 || ^11",
-        "composer-plugin-api": "^2.0"
+        "drupal/core": "^9 || ^10 || ^11",
+        "composer-plugin-api": "^2.0",
+        "wunderio/code-quality": "^3"
     },
     "require-dev": {
         "composer/composer": "^2.0"
