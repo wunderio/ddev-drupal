@@ -10,6 +10,32 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
 fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
+# Check if the DDEV_APPROOT environment variable is set
+if [ -z "${QWE}" ]; then
+  echo "The DDEV_APPROOT environment variable is not set."
+  echo "This may indicate that your DDEV version is outdated."
+  echo "Please update DDEV to the latest version."
+  echo ""
+  echo "You can update DDEV using one of the following methods, depending on your installation:"
+  echo ""
+  echo "For Homebrew (macOS):"
+  echo "  brew upgrade ddev"
+  echo ""
+  echo "For Debian/Ubuntu (including WSL2 with Debian/Ubuntu):"
+  echo "  sudo apt-get update && sudo apt-get upgrade"
+  echo ""
+  echo "For Fedora, Red Hat, etc.:"
+  echo "  sudo dnf upgrade ddev"
+  echo ""
+  echo "For Arch Linux:"
+  echo "  yay -Syu ddev-bin"
+  echo ""
+  echo "For manual installations, please follow the instructions at:"
+  echo "  https://docs.ddev.com/en/stable/users/install/ddev-upgrade/"
+  echo ""
+  exit 1
+fi
+
 source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 # Function to check if Drupal is working.
