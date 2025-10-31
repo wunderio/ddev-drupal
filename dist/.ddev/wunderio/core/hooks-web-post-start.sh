@@ -11,7 +11,7 @@ fi
 export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
 # Check if the DDEV_APPROOT environment variable is set
-if [ -z "${QWE}" ]; then
+if [ -z "${DDEV_APPROOT+x}" ]; then
   echo "The DDEV_APPROOT environment variable is not set."
   echo "This may indicate that your DDEV version is outdated."
   echo "Please update DDEV to the latest version."
