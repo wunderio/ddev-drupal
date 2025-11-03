@@ -11,6 +11,8 @@ fi
 
 source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
+cd $DDEV_COMPOSER_ROOT
+
 # Get the latest version of a package via Composer.
 get_latest_version() {
     # Run composer show to get information about the package
