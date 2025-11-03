@@ -118,6 +118,11 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
       return NULL;
     }
 
+    // Nothing to do here.
+    if (!getenv('IS_DDEV_PROJECT')) {
+        return;
+    }
+
     self::deployDdevFiles();
 
     // Run the update-grumphp-command.php script.
@@ -130,10 +135,6 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    */
   private function deployDdevFiles(): void {
 
-    // Nothing to do here.
-    if (!getenv('IS_DDEV_PROJECT')) {
-        return;
-    }
     // Clean up old files from project root so we can deploy file removal.
     // This is not ideal solution as we need to keep track of files to delete -
     // basically this should cover everything that is in the dist/ directory.
