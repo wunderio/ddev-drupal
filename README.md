@@ -106,6 +106,7 @@ URL will become example.com.ddev.site.
   ```
   .ddev/wunderio/core
   .ddev/commands/*/wunderio-core-*
+  .ddev/homeadditions/*/wunderio*
   ```
 
 4. Add changes to GIT (note that below command uses -p, so you need to say 'y'es or 'n'o if it asks what to commit):
