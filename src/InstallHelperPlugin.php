@@ -175,25 +175,25 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    */
   private function deletePaths($paths_to_delete, $dest_dir) {
     foreach($paths_to_delete as $path) {
-        $full_delete_path = "{$dest_dir}/$path";
+      $full_delete_path = "{$dest_dir}/$path";
 
-        if (is_file($full_delete_path)) {
-            unlink($full_delete_path);
+      if (is_file($full_delete_path)) {
+        unlink($full_delete_path);
+      }
+      elseif (is_dir($full_delete_path)) {
+        self::rDelete($full_delete_path);
+      }
+      elseif (strpos($full_delete_path, '*') !== FALSE) {
+        $files = glob($full_delete_path);
+        foreach($files as $file){
+          if(is_file($file)){
+            unlink($file);
+          }
         }
-        elseif (is_dir($full_delete_path)) {
-            self::rDelete($full_delete_path);
-        }
-        elseif (strpos($full_delete_path, '*') !== FALSE) {
-            $files = glob($full_delete_path);
-            foreach($files as $file){
-                if(is_file($file)){
-                    unlink($file);
-                }
-            }
-        }
-        else{
-            $this->io->write("The path is neither a file nor a directory. Can't delete: {$full_delete_path}");
-        }
+      }
+      else {
+        $this->io->write("The path is neither a file nor a directory. Can't delete: {$full_delete_path}");
+      }
     }
   }
 
@@ -237,6 +237,8 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    *   Source of files being copied.
    * @param string $dest
    *   Destination of files being copied.
+   * @param null|array $skip_paths
+   *   Array of paths to skip, or NULL if we copy everything.
    *
    * @return bool
    *   TRUE if recursive copy was successful, FALSE otherwise.
