@@ -9,7 +9,10 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
+
+# Expose exports to tooling.
+source "$(dirname "${BASH_SOURCE[0]}")/_helpers.sh"
+#source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 script_name="$1"
 # Remove the first argument (the script name) to get the remaining arguments
@@ -20,12 +23,13 @@ core_script=".ddev/wunderio/core/$script_name"
 
 # Check if the custom script exists and is executable
 if [ -x "$custom_script" ]; then
-    echo "Running custom script: $custom_script"
+    display_status_message "Running custom script: $custom_script"
     # Run the script and pass all remaining arguments.
     "$custom_script" "$@"
 elif [ -x "$core_script" ]; then
     # If the custom script doesn't exist, run the core script.
-    echo "Running core script: $core_script"
+    display_status_message "Running core script: $core_script"
+
     # Run the script and pass all remaining arguments.
     "$core_script" "$@"
 else

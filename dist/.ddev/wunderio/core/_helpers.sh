@@ -8,7 +8,11 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
+
+# Since we run this on host too.
+if [ -n "${DDEV_COMPOSER_ROOT+x}" ]; then
+    export PATH="$PATH:$DDEV_COMPOSER_ROOT/vendor/bin"
+fi
 
 # Function to display status message
 display_status_message() {

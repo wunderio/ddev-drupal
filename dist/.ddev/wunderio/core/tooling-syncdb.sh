@@ -10,7 +10,6 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
 source .ddev/wunderio/core/_helpers.sh
 

@@ -8,7 +8,7 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
+source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 if [ ! -f "$DDEV_APPROOT/phpunit.xml" ]; then
     echo "phpunit.xml not found! Please run 'ddev regenerate-phpunit-config'."
