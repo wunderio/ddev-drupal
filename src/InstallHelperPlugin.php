@@ -129,6 +129,11 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    * Copy the config.wunderio.yaml file and the dist/ directory contents to the project.
    */
   private function deployDdevFiles(): void {
+
+    // Nothing to do here.
+    if (!getenv('IS_DDEV_PROJECT')) {
+        return;
+    }
     // Clean up old files from project root so we can deploy file removal.
     // This is not ideal solution as we need to keep track of files to delete -
     // basically this should cover everything that is in the dist/ directory.
