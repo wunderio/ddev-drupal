@@ -74,14 +74,14 @@ if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     composer require wunderio/ddev-drupal --dev
     echo ""
     display_status_message "Staging the changes to GIT. "
-    read -rp "$(display_status_message "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock' (yes/no): [y] ")" answer2
+    read -rp "$(display_status_message "wunderio/ddev-drupal is updated, let's now add changes to GIT. This will run 'git add .ddev/ composer.json composer.lock drush/sites/local.site.yml' (yes/no): [y] ")" answer2
     # Convert the input to lowercase for case-insensitive comparison.
     answer2=${answer2,,}
     # If the answer is empty (user pressed Enter), default to "y".
     answer2=${answer2:-y}
     if [[ $answer2 == "yes" ]] || [[ $answer2 == "y" ]]; then
 
-        git add $DDEV_APPROOT/.ddev/ $DDEV_COMPOSER_ROOT/composer.json $DDEV_COMPOSER_ROOT/composer.lock
+        git add $DDEV_APPROOT/.ddev/ $DDEV_COMPOSER_ROOT/composer.json $DDEV_COMPOSER_ROOT/composer.lock $DDEV_COMPOSER_ROOT/drush/sites/local.site.yml
         display_status_message "Done! Please verify the staged changes and commit (git status / git commit)."
     else
         display_status_message "Skipping the GIT staging. You need to manually stage the changes to GIT."
