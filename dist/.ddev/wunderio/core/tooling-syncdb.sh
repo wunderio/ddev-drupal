@@ -10,7 +10,6 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin
 
 source .ddev/wunderio/core/_helpers.sh
 
@@ -22,7 +21,7 @@ prod_alias=$(ddev drush sa @prod 2>/dev/null)
 drush_exit=$?
 
 if [[ $drush_exit -ne 0 ]]; then
-  display_status_message "No production defined in drush commands, exiting early."
+  display_error_message "No production defined in drush commands, exiting early."
   exit 0
 fi
 

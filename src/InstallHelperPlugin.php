@@ -61,7 +61,7 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   public function activate(Composer $composer, IOInterface $io): void {
     $this->composer = $composer;
     $this->io = $io;
-    $this->projectDir = getcwd();
+    $this->projectDir = getenv('DDEV_APPROOT') ?? getcwd();
 
     $vendor_dir = $this->composer->getConfig()->get('vendor-dir');
     $this->vendorDir = realpath($vendor_dir);
@@ -126,31 +126,44 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   }
 
   /**
-   * Update event callback called from getSubscribedEvents().
-   *
-   * @param \Composer\Installer\PackageEvent $event
-   *   Composer package event sent on install/update/remove.
-   */
-  public function onWunderIoDdevDrupalPackageUpdate(PackageEvent $event) {
-    self::deployDdevFiles();
-  }
-
-  /**
    * Copy the config.wunderio.yaml file and the dist/ directory contents to the project.
    */
   private function deployDdevFiles(): void {
-    $dest_dir = "{$this->projectDir}";
-
     // Clean up old files from project root so we can deploy file removal.
     // This is not ideal solution as we need to keep track of files to delete -
     // basically this should cover everything that is in the dist/ directory.
     $paths_to_delete = [
       '.ddev/config.wunderio.yaml',
       '.ddev/commands/web/wunderio-core-*',
+      '.ddev/providers/silta.yaml',
       '.ddev/wunderio/core/',
       '.ddev/wunderio/custom/.gitignore',
-      'drush/sites/local.site.yml',
     ];
+
+    $this->deletePaths($paths_to_delete, $this->projectDir);
+
+    $project_paths_to_delete = [
+        'drush/sites/local.site.yml',
+    ];
+
+    $this->deletePaths($project_paths_to_delete, $this->vendorDir . '/..');
+
+    // Copy contents of dist folder to project.
+    $dist_dir = "{$this->vendorDir}/" . self::PACKAGE_NAME  . '/dist';
+
+    self::rcopy($dist_dir . '/.ddev', $this->projectDir . '/.ddev');
+    self::rcopy($dist_dir, $this->vendorDir . '/..', ['.ddev']);
+  }
+
+  /**
+   * Internal helper for the path deletion.
+   *
+   * @param array $paths_to_delete
+   *   Directories needed to be deleted.
+   * @param string $dest_dir
+   *   Base root for the paths.
+   */
+  private function deletePaths($paths_to_delete, $dest_dir) {
     foreach($paths_to_delete as $path) {
       $full_delete_path = "{$dest_dir}/$path";
 
@@ -168,14 +181,10 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
           }
         }
       }
-      else{
+      else {
         $this->io->write("The path is neither a file nor a directory. Can't delete: {$full_delete_path}");
       }
     }
-
-    // Copy contents of dist folder to project.
-    $dist_dir = "{$this->vendorDir}/" . self::PACKAGE_NAME . '/dist';
-    self::rcopy($dist_dir, $dest_dir);
   }
 
   /**
@@ -218,11 +227,13 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    *   Source of files being copied.
    * @param string $dest
    *   Destination of files being copied.
+   * @param null|array $skip_paths
+   *   Array of paths to skip, or NULL if we copy everything.
    *
    * @return bool
    *   TRUE if recursive copy was successful, FALSE otherwise.
    */
-  private static function rcopy($src, $dest): bool {
+  private static function rcopy($src, $dest, $skip_paths = NULL): bool {
     // If source is not a directory stop processing.
     if (!is_dir($src)) {
       echo "Source is not a directory";
@@ -250,14 +261,18 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
         }
       }
       elseif (!$f->isDot() && $f->isDir()) {
-        self::rcopy($f->getRealPath(), "$dest/$f");
+        if (!$skip_paths) {
+            self::rcopy($f->getRealPath(), "$dest/$f");
+        }
+        elseif (!in_array($f->getFilename(), $skip_paths)) {
+            self::rcopy($f->getRealPath(), "$dest/$f");
+        }
+        // We could Remove original directories but don't do it.
         // unlink($f->getRealPath());
       }
     }
 
     return TRUE;
-    // We could Remove original directories but don't do it
-    // unlink($src);
   }
 
   /**

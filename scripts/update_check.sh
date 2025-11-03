@@ -8,9 +8,10 @@ set -eu
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
 
-source /var/www/html/.ddev/wunderio/core/_helpers.sh
+source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
+
+cd $DDEV_COMPOSER_ROOT
 
 # Get the latest version of a package via Composer.
 get_latest_version() {
@@ -79,7 +80,8 @@ if [[ $answer == "yes" ]] || [[ $answer == "y" ]]; then
     # If the answer is empty (user pressed Enter), default to "y".
     answer2=${answer2:-y}
     if [[ $answer2 == "yes" ]] || [[ $answer2 == "y" ]]; then
-        git add .ddev/ composer.json composer.lock drush/sites/local.site.yml
+
+        git add $DDEV_APPROOT/.ddev/ $DDEV_COMPOSER_ROOT/composer.json $DDEV_COMPOSER_ROOT/composer.lock $DDEV_COMPOSER_ROOT/drush/sites/local.site.yml
         display_status_message "Done! Please verify the staged changes and commit (git status / git commit)."
     else
         display_status_message "Skipping the GIT staging. You need to manually stage the changes to GIT."

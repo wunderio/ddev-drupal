@@ -8,7 +8,7 @@ set -u
 if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
-export PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/var/www/html/vendor/bin
+source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 if [[ "$#" -lt 1 ]]; then
   echo "Usage: ddev pmu <module1> <module2> ..."
