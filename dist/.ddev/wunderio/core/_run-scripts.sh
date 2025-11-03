@@ -10,9 +10,8 @@ if [[ -n "${WUNDERIO_DEBUG:-}" ]]; then
     set -x
 fi
 
-# Expose exports to tooling.
+# Expose helpers to tooling.
 source "$(dirname "${BASH_SOURCE[0]}")/_helpers.sh"
-#source $DDEV_APPROOT/.ddev/wunderio/core/_helpers.sh
 
 script_name="$1"
 # Remove the first argument (the script name) to get the remaining arguments

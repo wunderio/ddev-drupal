@@ -4,4 +4,4 @@
 ## Usage: pmu
 ## Example: "ddev pmu module1 module2 ..."
 
-/var/www/html/.ddev/wunderio/core/_run-scripts.sh tooling-pmu.sh "$@"
+$DDEV_APPROOT/.ddev/wunderio/core/_run-scripts.sh tooling-pmu.sh "$@"
