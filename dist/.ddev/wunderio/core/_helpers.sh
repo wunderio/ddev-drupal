@@ -17,3 +17,12 @@ display_status_message() {
 
     printf "${color_green}${message}${color_reset}\n"
 }
+
+# Function to display status message
+display_error_message() {
+    local color_red="\033[0;31m"
+    local color_reset="\033[0m"
+    local message="$1"
+
+    printf "${color_red}${message}${color_reset}\n"
+}
