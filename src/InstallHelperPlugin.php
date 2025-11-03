@@ -126,16 +126,6 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
   }
 
   /**
-   * Update event callback called from getSubscribedEvents().
-   *
-   * @param \Composer\Installer\PackageEvent $event
-   *   Composer package event sent on install/update/remove.
-   */
-  public function onWunderIoDdevDrupalPackageUpdate(PackageEvent $event) {
-    self::deployDdevFiles();
-  }
-
-  /**
    * Copy the config.wunderio.yaml file and the dist/ directory contents to the project.
    */
   private function deployDdevFiles(): void {
