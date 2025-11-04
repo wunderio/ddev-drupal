@@ -101,6 +101,11 @@ class InstallHelperPlugin implements PluginInterface, EventSubscriberInterface {
    *   Composer package event sent on install/update/remove.
    */
   public function onWunderIoDdevDrupalPackageInstall(PackageEvent $event) {
+    // Unless its DDEV enviroment we dont have nothing to do here.
+    if (!getenv('IS_DDEV_PROJECT')) {
+        return;
+    }
+
     /** @var \Composer\DependencyResolver\Operation\InstallOperation $operation */
     $operation = $event->getOperation();
 
