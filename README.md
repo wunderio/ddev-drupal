@@ -4,6 +4,8 @@ This project extends the standard [DDEV](https://ddev.com/) setup with additiona
 designed for Drupal development. It provides a set of custom commands, configurations, and automation
 scripts to enhance your Drupal development workflow.
 
+Before going any further, see docs/README.md for upgrade guides and additional documentation.
+
 ## Features
 
 ### Custom DDEV Commands
