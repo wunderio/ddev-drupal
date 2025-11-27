@@ -15,11 +15,6 @@ hooks:
     - exec: "$DDEV_APPROOT/.ddev/wunderio/core/_run-scripts.sh hooks-web-post-start.sh"
     # Wunderio/ddev-drupal update check.
     - exec: "UPDATE_SCRIPT=\"$DDEV_COMPOSER_ROOT/vendor/wunderio/ddev-drupal/scripts/update_check.sh\"; [ -f \"$UPDATE_SCRIPT\" ] && $UPDATE_SCRIPT || true"
-web_environment:
-# Both this project and wunderio/lando-drupal use the same file
-# at drush/sites/local.site.yml. To make sure that the local alias
-# is working, we need to set the same environment variables here.
-- LANDO_WEBROOT=$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT
 # When Mutagen is enabled (which it is by default in DDEV v1.19+),
 # these directories are bind-mounted directly rather than synced via Mutagen
 # This improves performance for large file directories by bypassing Mutagen's
